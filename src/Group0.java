@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.*;
 
 public class Group0 {
 
@@ -23,7 +24,7 @@ public class Group0 {
 		
 		Integer [] toSort = data.clone();
 		
-		sort(toSort);
+		sort(toSort, 0, toSort.length-1);
 		
 		//printArray(sorted, 100);
 		
@@ -33,7 +34,7 @@ public class Group0 {
 
 		long start = System.currentTimeMillis();
 		
-		sort(toSort);
+		sort(toSort, 0, toSort.length-1);
 		
 		long end = System.currentTimeMillis();
 		
@@ -48,9 +49,42 @@ public class Group0 {
 	// Note: you may change the return type of the method. 
 	// You would need to provide your own function that prints your sorted array to 
 	// a file in the exact same format that my program outputs
-	private static void sort(Integer[] toSort) {
-		Arrays.sort(toSort, new BinaryComparator());
+	private static void sort(Integer[] toSort, int start, int end){
+
+			if (start < end) {
+				int q = partitionRandom(toSort, start, end);
+				sort(toSort, start, q - 1);
+				sort(toSort, q + 1, end);
+	
+			}
 	}
+	private static int partitionRandom(Integer[] array, int start, int end) {
+        Random rand = new Random();
+        int i = rand.nextInt(end-start)+start;
+        Integer saved = array[i];
+        array[i] = array[end];
+        array[end] = saved;
+        return partition(array,start,end);
+    }
+    
+    private static int partition(Integer[] array, int start, int end) {
+		BinaryComparator binary = new BinaryComparator();
+        Integer x = array[end];
+        int i = (start - 1);
+        for (int j = start; j < end; j++) {
+            if (binary.compare(array[j], x) < 0) {
+                i++;
+                Integer saved = array[i];
+                array[i] = array[j];
+                array[j] = saved;
+            }
+
+        }
+        Integer saved = array[i + 1];
+        array[i + 1] = array[end];
+        array[end] = saved;
+        return (i + 1);
+    }
 	
 	private static String[] readData(String inFile) throws FileNotFoundException {
 		ArrayList<String> input = new ArrayList<>();
@@ -113,3 +147,4 @@ public class Group0 {
 	
 
 }
+
