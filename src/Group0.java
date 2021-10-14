@@ -23,6 +23,7 @@ public class Group0 {
 		Integer [] data = readInts(inputFileName);
 		
 		Integer [] toSort = data.clone();
+		Integer [] toSortQuick = data.clone();
 		
 		sort(toSort, 0, toSort.length-1);
 		
@@ -34,14 +35,14 @@ public class Group0 {
 
 		long start = System.currentTimeMillis();
 		
-		sort(toSort, 0, toSort.length-1);
+		quicksort(toSortQuick, 0, toSort.length-1);
 		
 		long end = System.currentTimeMillis();
 		
 		System.out.println(end - start);
 		
-		writeOutResult(toSort, outFileName);
-
+		writeOutResult(toSort, "expectedoutput.txt");
+		writeOutResult(toSortQuick, outFileName);
 	}
 	
 	// YOUR SORTING METHOD GOES HERE. 
@@ -49,12 +50,12 @@ public class Group0 {
 	// Note: you may change the return type of the method. 
 	// You would need to provide your own function that prints your sorted array to 
 	// a file in the exact same format that my program outputs
-	private static void sort(Integer[] toSort, int start, int end){
+	private static void quicksort(Integer[] toSort, int start, int end){
 
 			if (start < end) {
 				int q = partitionRandom(toSort, start, end);
-				sort(toSort, start, q - 1);
-				sort(toSort, q + 1, end);
+				quicksort(toSort, start, q - 1);
+				quicksort(toSort, q + 1, end);
 	
 			}
 	}
