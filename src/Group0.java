@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
 import java.util.*;
+import java.util.Collections;
 
 public class Group0 {
 
@@ -23,7 +24,7 @@ public class Group0 {
 		Integer [] data = readInts(inputFileName);
 		
 		Integer [] toSort = data.clone();
-		Integer [] toSortQuick = data.clone();
+		Integer [] ourSort = data.clone();
 		
 		long start = System.currentTimeMillis();
 		sort(toSort);
@@ -37,14 +38,16 @@ public class Group0 {
 
 		long start2 = System.currentTimeMillis();
 		
-		quicksort(toSortQuick, 0, toSort.length-1);
+		buckets(ourSort);
 		
 		long end2 = System.currentTimeMillis();
 		
 		System.out.println("It took our sort " + (end2 - start2) + " milis");
 		
+		System.out.println(Arrays.equals(toSort, ourSort));
+
 		writeOutResult(toSort, "expectedoutput.txt");
-		writeOutResult(toSortQuick, outFileName);
+		writeOutResult(ourSort, outFileName);
 	}
 	
 	private static void sort(Integer[] toSort) {
@@ -55,42 +58,72 @@ public class Group0 {
 	// Note: you may change the return type of the method. 
 	// You would need to provide your own function that prints your sorted array to 
 	// a file in the exact same format that my program outputs
-	private static void quicksort(Integer[] toSort, int start, int end){
-
-			if (start < end) {
-				int q = partitionRandom(toSort, start, end);
-				quicksort(toSort, start, q - 1);
-				quicksort(toSort, q + 1, end);
-	
-			}
-	}
-	private static int partitionRandom(Integer[] array, int start, int end) {
-        Random rand = new Random();
-        int i = rand.nextInt(end-start)+start;
-        Integer saved = array[i];
-        array[i] = array[end];
-        array[end] = saved;
-        return partition(array,start,end);
-    }
-    
-    private static int partition(Integer[] array, int start, int end) {
-		BinaryComparator binary = new BinaryComparator();
-        Integer x = array[end];
-        int i = (start - 1);
-        for (int j = start; j < end; j++) {
-            if (binary.compare(array[j], x) < 0) {
-                i++;
-                Integer saved = array[i];
-                array[i] = array[j];
-                array[j] = saved;
-            }
-
+	private static void buckets(Integer[] toSort){
+		int n = toSort.length;
+		if (n <= 0)
+            return;
+ 
+        // 1) Create n empty buckets
+        @SuppressWarnings("unchecked")
+        Vector<Integer>[] buckets = new Vector[25];
+ 
+        for (int i = 0; i < 25; i++) {
+            buckets[i] = new Vector<Integer>();
         }
-        Integer saved = array[i + 1];
-        array[i + 1] = array[end];
-        array[end] = saved;
-        return (i + 1);
-    }
+ 
+        // 2) Put array elements in different buckets
+        for (int i = 0; i < n; i++) {
+            int idx = Helper.numBinaryOnes(toSort[i]);
+            buckets[idx].add(toSort[i]);
+        }
+ 
+        // 3) Sort individual buckets
+        for (int i = 0; i < 25; i++) {
+            buckets2(buckets[i]);
+        }
+ 
+        // 4) Concatenate all buckets into toSort[]
+        int index = 0;
+        for (int i = 0; i < 25; i++) {
+            for (int j = 0; j < buckets[i].size(); j++) {
+                toSort[index++] = buckets[i].get(j);
+            }
+        }
+
+	}
+
+	private static void buckets2(Vector<Integer> toSort){
+		int n = toSort.size();
+		if (n <= 0)
+            return;
+ 
+        // 1) Create n empty buckets
+        @SuppressWarnings("unchecked")
+        Vector<Integer>[] buckets = new Vector[13];
+ 
+        for (int i = 0; i < 13; i++) {
+            buckets[i] = new Vector<Integer>();
+        }
+ 
+        // 2) Put array elements in different buckets
+        for (int i = 0; i < n; i++) {
+            int idx = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
+            buckets[idx].add(toSort.get(i));
+        }
+ 
+        // 3) Sort individual buckets
+        for (int i = 0; i < 13; i++) {
+            Collections.sort(buckets[i], new BinaryComparator2());
+        }
+ 
+        // 4) Concatenate all buckets into toSort[]
+        int index = 0;
+        for (int i = 0; i < 13; i++) {
+            for (int j = 0; j < buckets[i].size(); j++) {
+                toSort.set(index++, buckets[i].get(j));
+            }
+        }
+	}
 	
 	private static String[] readData(String inFile) throws FileNotFoundException {
 		ArrayList<String> input = new ArrayList<>();
@@ -145,6 +178,25 @@ public class Group0 {
 			if (digits1 != digits2) return (digits1 - digits2);
 			// executed only of the number of 1s is the same
 			if (lengthSubstring1 != lengthSubstring2) return (lengthSubstring1 - lengthSubstring2);
+			
+			// executed only if both of the other ones were the same:
+			return (n1 - n2);
+		}
+		
+	}
+	private static class BinaryComparator2 implements Comparator<Integer> {
+
+		@Override
+		public int compare(Integer n1, Integer n2) {
+			// int digits1 = Helper.numBinaryOnes(n1);
+			// int digits2 = Helper.numBinaryOnes(n2);
+			
+			// int lengthSubstring1 = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(n1));
+			// int lengthSubstring2 = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(n2));
+			
+			// if (digits1 != digits2) return (digits1 - digits2);
+			// executed only of the number of 1s is the same
+			// if (lengthSubstring1 != lengthSubstring2) return (lengthSubstring1 - lengthSubstring2);
 			
 			// executed only if both of the other ones were the same:
 			return (n1 - n2);
