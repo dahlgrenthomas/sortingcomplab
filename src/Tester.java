@@ -64,62 +64,65 @@ public class Tester {
             return;
  
         @SuppressWarnings("unchecked")
-        Vector<Integer>[] buckets = new Vector[25];
+        //Vector<Integer>[] buckets = new Vector[25];
+		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
  
         for (int i = 0; i < 25; i++) {
-            buckets[i] = new Vector<Integer>();
+            //buckets[i] = new Vector<Integer>();
+			buckets.add(new ArrayList<Integer>());
         }
  
         for (int i = 0; i < n; i++) {
             int idx = Helper.numBinaryOnes(toSort[i]);
-            buckets[idx].add(toSort[i]);
+            buckets.get(idx).add(toSort[i]);
         }
  
         for (int i = 0; i < 25; i++) {
-            buckets2(buckets[i]);
+            buckets2(buckets.get(i));
         }
  
         int index = 0;
         for (int i = 0; i < 25; i++) {
-            for (int j = 0; j < buckets[i].size(); j++) {
-                toSort[index++] = buckets[i].get(j);
+            for (int j = 0; j < buckets.get(i).size(); j++) {
+                toSort[index++] = buckets.get(i).get(j);
             }
         }
 
 	}
 
-	private static void buckets2(Vector<Integer> toSort){
+	private static void buckets2(ArrayList<Integer> toSort){
 		int n = toSort.size();
 		if (n <= 0)
             return;
-
-        @SuppressWarnings("unchecked")
-        Vector<Integer>[] buckets = new Vector[13];
  
-        for (int i = 0; i < 13; i++) {
-            buckets[i] = new Vector<Integer>();
+        @SuppressWarnings("unchecked")
+        //Vector<Integer>[] buckets = new Vector[25];
+		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
+ 
+        for (int i = 0; i < 25; i++) {
+            //buckets[i] = new Vector<Integer>();
+			buckets.add(new ArrayList<Integer>());
         }
  
         for (int i = 0; i < n; i++) {
             int idx = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
-            buckets[idx].add(toSort.get(i));
+            buckets.get(idx).add(toSort.get(i));
         }
  
-        for (int i = 0; i < 13; i++) {
-			//Collections.sort(buckets[i], new BinaryComparator2());
-			radixsort(buckets[i]);
-			//quickWithInsertion(buckets[i], 0, buckets[i].size() - 1);
+        for (int i = 0; i < 25; i++) {
+            radixsort(buckets.get(i));
+			//Collections.sort(buckets.get(i), new BinaryComparator2());
         }
  
         int index = 0;
-        for (int i = 0; i < 13; i++) {
-            for (int j = 0; j < buckets[i].size(); j++) {
-                toSort.set(index++, buckets[i].get(j));
+        for (int i = 0; i < 25; i++) {
+            for (int j = 0; j < buckets.get(i).size(); j++) {
+                toSort.set(index++, buckets.get(i).get(j));
             }
         }
 	}
 
-	static int getMax(Vector<Integer> arr, int n)
+	static int getMax(ArrayList<Integer> arr, int n)
     {
         int mx = arr.get(0);
         for (int i = 1; i < n; i++)
@@ -128,7 +131,7 @@ public class Tester {
         return mx;
     }
  
-    static void countSort(Vector<Integer> arr, int n, int exp)
+    static void countSort(ArrayList<Integer> arr, int n, int exp)
     {
         int output[] = new int[n];
         int i;
@@ -150,7 +153,7 @@ public class Tester {
             arr.set(i, output[i]);
     }
 
-    private static void radixsort(Vector<Integer> toSort)
+    private static void radixsort(ArrayList<Integer> toSort)
     {
 		int n = toSort.size();
 		if(n!=0){
