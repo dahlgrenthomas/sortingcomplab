@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.*;
 import java.util.Collections;
 
-public class Group0 {
+public class Group8 {
 
 	public static void main(String[] args) throws InterruptedException, FileNotFoundException {
 		
@@ -24,41 +24,33 @@ public class Group0 {
 		Integer [] data = readInts(inputFileName);
 		
 		Integer [] toSort = data.clone();
-		Integer [] ourSort = data.clone();
 		
-		long start = System.currentTimeMillis();
 		sort(toSort);
-		long end = System.currentTimeMillis();
 		
-		System.out.println("It took TIM sort " + (end - start) + " milis");
 		//printArray(sorted, 100);
 		
+		toSort = data.clone();
 		
 		Thread.sleep(10); //to let other things finish before timing; adds stability of runs
 
-		long start2 = System.currentTimeMillis();
+		long start = System.currentTimeMillis();
 		
-		buckets(ourSort);
+		sort(toSort);
 		
-		long end2 = System.currentTimeMillis();
+		long end = System.currentTimeMillis();
 		
-		System.out.println("It took our sort " + (end2 - start2) + " milis");
+		System.out.println(end - start);
 		
-		System.out.println(Arrays.equals(toSort, ourSort));
+		writeOutResult(toSort, outFileName);
 
-		writeOutResult(toSort, "expectedoutput.txt");
-		writeOutResult(ourSort, outFileName);
 	}
 	
-	private static void sort(Integer[] toSort) {
-		Arrays.sort(toSort, new BinaryComparator());
-	}
 	// YOUR SORTING METHOD GOES HERE. 
 	// You may call other methods and use other classes. 
 	// Note: you may change the return type of the method. 
 	// You would need to provide your own function that prints your sorted array to 
 	// a file in the exact same format that my program outputs
-	private static void buckets(Integer[] toSort){
+	private static void sort(Integer[] toSort) {
 		int n = toSort.length;
 		if (n <= 0)
             return;
@@ -89,10 +81,9 @@ public class Group0 {
                 toSort[index++] = buckets[i].get(j);
             }
         }
-
 	}
 
-	private static void buckets2(Vector<Integer> toSort){
+    private static void buckets2(Vector<Integer> toSort){
 		int n = toSort.size();
 		if (n <= 0)
             return;
@@ -165,25 +156,6 @@ public class Group0 {
 
 	}
 	
-	private static class BinaryComparator implements Comparator<Integer> {
-
-		@Override
-		public int compare(Integer n1, Integer n2) {
-			int digits1 = Helper.numBinaryOnes(n1);
-			int digits2 = Helper.numBinaryOnes(n2);
-			
-			int lengthSubstring1 = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(n1));
-			int lengthSubstring2 = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(n2));
-			
-			if (digits1 != digits2) return (digits1 - digits2);
-			// executed only of the number of 1s is the same
-			if (lengthSubstring1 != lengthSubstring2) return (lengthSubstring1 - lengthSubstring2);
-			
-			// executed only if both of the other ones were the same:
-			return (n1 - n2);
-		}
-		
-	}
 	private static class BinaryComparator2 implements Comparator<Integer> {
 
 		@Override
@@ -206,4 +178,3 @@ public class Group0 {
 	
 
 }
-
