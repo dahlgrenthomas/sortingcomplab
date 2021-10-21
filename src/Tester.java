@@ -67,7 +67,7 @@ public class Tester {
         //Vector<Integer>[] buckets = new Vector[25];
 		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
  
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 24; i++) {
             //buckets[i] = new Vector<Integer>();
 			buckets.add(new ArrayList<Integer>());
         }
@@ -77,12 +77,13 @@ public class Tester {
             buckets.get(idx).add(toSort[i]);
         }
  
-        for (int i = 0; i < 25; i++) {
-            buckets2(buckets.get(i));
+        for (int i = 0; i < 24; i++) {
+			buckets2(buckets.get(i));
+            
         }
  
         int index = 0;
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 24; i++) {
             for (int j = 0; j < buckets.get(i).size(); j++) {
                 toSort[index++] = buckets.get(i).get(j);
             }
@@ -99,7 +100,7 @@ public class Tester {
         //Vector<Integer>[] buckets = new Vector[25];
 		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
  
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 13; i++) {
             //buckets[i] = new Vector<Integer>();
 			buckets.add(new ArrayList<Integer>());
         }
@@ -109,13 +110,13 @@ public class Tester {
             buckets.get(idx).add(toSort.get(i));
         }
  
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 13; i++) {
             radixsort(buckets.get(i));
 			//Collections.sort(buckets.get(i), new BinaryComparator2());
         }
  
         int index = 0;
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 13; i++) {
             for (int j = 0; j < buckets.get(i).size(); j++) {
                 toSort.set(index++, buckets.get(i).get(j));
             }
