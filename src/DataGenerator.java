@@ -16,7 +16,8 @@ public class DataGenerator {
 	
 	public static void main(String [] args) throws FileNotFoundException{
 		int seed = 1111; // change the seed to get different data
-		Random r = new Random(seed);
+		int seed2 = 6666;
+		Random r = new Random(seed2);
 		
 		if (args.length < 2) {
 			System.out.println("Please run with two command line arguments: output file name and the number of items");
@@ -54,10 +55,10 @@ public class DataGenerator {
 			cumulProbs[i] = cumulProbs[i-1] + (1-sum)/(19 - probs.length);
 		}
 		
-		for(double p: cumulProbs) {
-			System.out.print(p + " ");
-		}
-		System.out.println();
+//		for(double p: cumulProbs) {
+//			System.out.print(p + " ");
+//		}
+//		System.out.println();
 		
 		// generating data 
 		int[] data = new int[n];

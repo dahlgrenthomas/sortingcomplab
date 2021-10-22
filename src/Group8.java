@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
-import java.util.*;
 import java.util.Collections;
-
+/**
+ * @author Thomas Dahlgren
+ * @author Josh Quist
+ */
 public class Group8 {
 
 	public static void main(String[] args) throws InterruptedException, FileNotFoundException {
@@ -54,64 +56,56 @@ public class Group8 {
 		int n = toSort.length;
 		if (n <= 0)
             return;
+
+		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
  
-        // 1) Create n empty buckets
-        @SuppressWarnings("unchecked")
-        Vector<Integer>[] buckets = new Vector[25];
- 
-        for (int i = 0; i < 25; i++) {
-            buckets[i] = new Vector<Integer>();
+        for (int i = 0; i < 24; i++) {
+			buckets.add(new ArrayList<Integer>());
         }
  
-        // 2) Put array elements in different buckets
         for (int i = 0; i < n; i++) {
             int idx = Helper.numBinaryOnes(toSort[i]);
-            buckets[idx].add(toSort[i]);
+            buckets.get(idx).add(toSort[i]);
         }
  
-        // 3) Sort individual buckets
-        for (int i = 0; i < 25; i++) {
-            buckets2(buckets[i]);
+        for (int i = 0; i < 24; i++) {
+			if(buckets.get(i).size() > 1){
+				buckets2(buckets.get(i));
+			}
         }
  
-        // 4) Concatenate all buckets into toSort[]
         int index = 0;
-        for (int i = 0; i < 25; i++) {
-            for (int j = 0; j < buckets[i].size(); j++) {
-                toSort[index++] = buckets[i].get(j);
+        for (int i = 0; i < 24; i++) {
+            for (int j = 0; j < buckets.get(i).size(); j++) {
+                toSort[index++] = buckets.get(i).get(j);
             }
         }
 	}
 
-    private static void buckets2(Vector<Integer> toSort){
+    private static void buckets2(ArrayList<Integer> toSort){
 		int n = toSort.size();
 		if (n <= 0)
             return;
  
-        // 1) Create n empty buckets
-        @SuppressWarnings("unchecked")
-        Vector<Integer>[] buckets = new Vector[13];
+		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
  
         for (int i = 0; i < 13; i++) {
-            buckets[i] = new Vector<Integer>();
+			buckets.add(new ArrayList<Integer>());
         }
  
-        // 2) Put array elements in different buckets
         for (int i = 0; i < n; i++) {
             int idx = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
-            buckets[idx].add(toSort.get(i));
+			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
+			if(index<0){
+				index = index*(-1) - 1;
+			}
+            buckets.get(idx).add(index, toSort.get(i));
         }
  
-        // 3) Sort individual buckets
-        for (int i = 0; i < 13; i++) {
-            Collections.sort(buckets[i], new BinaryComparator2());
-        }
- 
-        // 4) Concatenate all buckets into toSort[]
         int index = 0;
         for (int i = 0; i < 13; i++) {
-            for (int j = 0; j < buckets[i].size(); j++) {
-                toSort.set(index++, buckets[i].get(j));
+            for (int j = 0; j < buckets.get(i).size(); j++) {
+                toSort.set(index++, buckets.get(i).get(j));
             }
         }
 	}
