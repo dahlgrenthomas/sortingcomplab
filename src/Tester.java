@@ -62,13 +62,10 @@ public class Tester {
 		int n = toSort.length;
 		if (n <= 0)
             return;
- 
-        @SuppressWarnings("unchecked")
-        //Vector<Integer>[] buckets = new Vector[25];
+
 		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
  
         for (int i = 0; i < 24; i++) {
-            //buckets[i] = new Vector<Integer>();
 			buckets.add(new ArrayList<Integer>());
         }
  
@@ -78,8 +75,9 @@ public class Tester {
         }
  
         for (int i = 0; i < 24; i++) {
-			buckets2(buckets.get(i));
-            
+			if(buckets.get(i).size() > 1){
+				buckets2(buckets.get(i));
+			}
         }
  
         int index = 0;
@@ -90,29 +88,24 @@ public class Tester {
         }
 
 	}
-
 	private static void buckets2(ArrayList<Integer> toSort){
 		int n = toSort.size();
 		if (n <= 0)
             return;
  
-        @SuppressWarnings("unchecked")
-        //Vector<Integer>[] buckets = new Vector[25];
 		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
  
         for (int i = 0; i < 13; i++) {
-            //buckets[i] = new Vector<Integer>();
 			buckets.add(new ArrayList<Integer>());
         }
  
         for (int i = 0; i < n; i++) {
             int idx = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
-            buckets.get(idx).add(toSort.get(i));
-        }
- 
-        for (int i = 0; i < 13; i++) {
-            radixsort(buckets.get(i));
-			//Collections.sort(buckets.get(i), new BinaryComparator2());
+			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
+			if(index<0){
+				index = index*(-1) - 1;
+			}
+            buckets.get(idx).add(index, toSort.get(i));
         }
  
         int index = 0;
@@ -123,47 +116,6 @@ public class Tester {
         }
 	}
 
-	static int getMax(ArrayList<Integer> arr, int n)
-    {
-        int mx = arr.get(0);
-        for (int i = 1; i < n; i++)
-            if (arr.get(i) > mx)
-                mx = arr.get(i);
-        return mx;
-    }
- 
-    static void countSort(ArrayList<Integer> arr, int n, int exp)
-    {
-        int output[] = new int[n];
-        int i;
-        int count[] = new int[10];
-        Arrays.fill(count, 0);
- 
-        for (i = 0; i < n; i++)
-            count[(arr.get(i) / exp) % 10]++;
- 
-        for (i = 1; i < 10; i++)
-            count[i] += count[i - 1];
-
-        for (i = n - 1; i >= 0; i--) {
-            output[count[(arr.get(i) / exp) % 10] - 1] = arr.get(i);
-            count[(arr.get(i) / exp) % 10]--;
-        }
- 
-        for (i = 0; i < n; i++)
-            arr.set(i, output[i]);
-    }
-
-    private static void radixsort(ArrayList<Integer> toSort)
-    {
-		int n = toSort.size();
-		if(n!=0){
-			int m = getMax(toSort, n);
-			for (int exp = 1; m / exp > 0; exp *= 10)
-				countSort(toSort, n, exp);
-		}
-        
-    }
 	
 	private static String[] readData(String inFile) throws FileNotFoundException {
 		ArrayList<String> input = new ArrayList<>();
