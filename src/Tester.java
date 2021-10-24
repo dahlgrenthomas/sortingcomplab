@@ -100,7 +100,8 @@ public class Tester {
         }
  
         for (int i = 0; i < n; i++) {
-            int idx = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
+			int idx = longestRepeatedSubstring(toSort.get(i));
+            //int idx = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
 			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
 			if(index<0){
 				index = index*(-1) - 1;
@@ -115,7 +116,6 @@ public class Tester {
             }
         }
 	}
-
 	
 	private static String[] readData(String inFile) throws FileNotFoundException {
 		ArrayList<String> input = new ArrayList<>();
@@ -176,25 +176,38 @@ public class Tester {
 		}
 		
 	}
-	private static class BinaryComparator2 implements Comparator<Integer> {
-
-		@Override
-		public int compare(Integer n1, Integer n2) {
-			// int digits1 = Helper.numBinaryOnes(n1);
-			// int digits2 = Helper.numBinaryOnes(n2);
-			
-			// int lengthSubstring1 = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(n1));
-			// int lengthSubstring2 = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(n2));
-			
-			// if (digits1 != digits2) return (digits1 - digits2);
-			// executed only of the number of 1s is the same
-			// if (lengthSubstring1 != lengthSubstring2) return (lengthSubstring1 - lengthSubstring2);
-			
-			// executed only if both of the other ones were the same:
-			return (n1 - n2);
-		}
-		
-	}
+	private static int longestRepeatedSubstring(int number) {
+		String str = Integer.toBinaryString(number);
+        int n = str.length();
+        int LCSRe[][] = new int[n + 1][n + 1];
+ 
+        String res = "";
+        int res_length = 0;
+ 
+        int i, index = 0;
+        for (i = 1; i <= n; i++) {
+            for (int j = i + 1; j <= n; j++) {
+                if (str.charAt(i - 1) == str.charAt(j - 1)
+                        && LCSRe[i - 1][j - 1] < (j - i)) {
+                    LCSRe[i][j] = LCSRe[i - 1][j - 1] + 1;
+                    if (LCSRe[i][j] > res_length) {
+                        res_length = LCSRe[i][j];
+                        index = Math.max(i, index);
+                    }
+                } else {
+                    LCSRe[i][j] = 0;
+                }
+            }
+        }
+ 
+        if (res_length > 0) {
+            for (i = index - res_length + 1; i <= index; i++) {
+                res += str.charAt(i - 1);
+            }
+        }
+ 
+        return res.length();
+    }
 	
 
 }
