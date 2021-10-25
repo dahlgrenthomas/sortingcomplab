@@ -1,9 +1,9 @@
 public class substring {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
-        for(int i = 0; i<10000; i++){
-            //MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(i*3000));
-            longestRepeatedSubstring(Integer.toBinaryString(i*3000));
+        for(int i = 0; i<5000; i++){
+            MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(i*3000));
+            //longestRepeatedSubstring(Integer.toBinaryString(i*3000));
         }
         long end = System.currentTimeMillis();
         System.out.println(end-start);

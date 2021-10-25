@@ -99,7 +99,8 @@ public class Group8 {
         for (int i = 0; i < n; i++) {
 			//int idx = Helper.longestRepeatedSubstring(toSort.get(i));
             //int idx = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
-            int idx = Helper.MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(toSort.get(i)));
+            //int idx = Helper.MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(toSort.get(i)));
+			int idx = Helper2.lengthLongestRepeatedSubstring(toSort.get(i));
 			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
 			if(index<0){
 				index = index*(-1) - 1;
@@ -154,25 +155,52 @@ public class Group8 {
 		out.close();
 
 	}
-	private static class BinaryComparator implements Comparator<Integer> {
+	// private static class BinaryComparator implements Comparator<Integer> {
 
-		@Override
-		public int compare(Integer n1, Integer n2) {
-			int digits1 = Helper2.numBinaryOnes(n1);
-			int digits2 = Helper.numBinaryOnes(n2);
+	// 	@Override
+	// 	public int compare(Integer n1, Integer n2) {
+	// 		int digits1 = Helper2.numBinaryOnes(n1);
+	// 		int digits2 = Helper.numBinaryOnes(n2);
 			
-			int lengthSubstring1 = Helper2.lengthLongestRepeatedSubstring(Integer.toBinaryString(n1));
-			int lengthSubstring2 = Helper2.lengthLongestRepeatedSubstring(Integer.toBinaryString(n2));
+	// 		int lengthSubstring1 = Helper2.lengthLongestRepeatedSubstring(Integer.toBinaryString(n1));
+	// 		int lengthSubstring2 = Helper2.lengthLongestRepeatedSubstring(Integer.toBinaryString(n2));
 			
-			if (digits1 != digits2) return (digits1 - digits2);
-			// executed only of the number of 1s is the same
-			if (lengthSubstring1 != lengthSubstring2) return (lengthSubstring1 - lengthSubstring2);
+	// 		if (digits1 != digits2) return (digits1 - digits2);
+	// 		// executed only of the number of 1s is the same
+	// 		if (lengthSubstring1 != lengthSubstring2) return (lengthSubstring1 - lengthSubstring2);
 			
-			// executed only if both of the other ones were the same:
-			return (n1 - n2);
-		}
+	// 		// executed only if both of the other ones were the same:
+	// 		return (n1 - n2);
+	// 	}
 		
-	}
+	// }
+	public static int findLongestSequence(String binaryStr){
+		{
+			int length = binaryStr.length();
+			int table[][]=new int[length+1][length+1];
+			int max=0;
+			int index=0;
+			for(int i=1;i<=length;++i)
+			{
+			 for(int j=i+1;j<=length;++j)
+			 {
+			  if(binaryStr.charAt(i-1)==binaryStr.charAt(j-1) && j-i>table[i-1][j-1])
+			  {
+				table[i][j]=table[i-1][j-1]+1;
+				if(max<table[i][j])
+				  {
+					max=table[i][j];
+					index=Math.max(i,index);
+				  }
+			  }
+			  else
+			   table[i][j]=0;
+			 }
+			}
+			return binaryStr.substring(index-max,index).length();
+		}
+			
+}
 
 
 }

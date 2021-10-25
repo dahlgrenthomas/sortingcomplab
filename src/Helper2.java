@@ -24,33 +24,46 @@ public class Helper2 {
 		return count;
 	}
 	
-	public static int lengthLongestRepeatedSubstring(String binary) {
-        int n = binary.length();
-
-        int[][] dp = new int[n + 1][n + 1];
-        // dp [i,j] denotes the length of substring at i, j which is repeating 
-        // and non overlapping
-
-        var index = 0;
-        var max = 0;
-
-        for (var i = 1; i <= n; i++)
-        {
-            for (var j = i + 1; j <= n; j++)
-            {
-                // essential condition to see if the elements repeats
-                if (binary.charAt(j-1) == binary.charAt(i-1) && (j - i) > dp[i - 1][j - 1]){
-                    dp[i][j] = 1 + dp[i - 1][j - 1];
-                    if (dp[i][j] > max)
-                    {
-                        max = dp[i][j];
-                        index = i - max;
+    private static int binaryLength(int i) {
+        return Integer.SIZE - Integer.numberOfLeadingZeros(i);
+      }
+	public static int lengthLongestRepeatedSubstring(int number) {
+        int binaryLength = binaryLength(number);
+            int longestSubstringLengthSoFar = 0;
+            // iterate over possible lengths
+            // the longest length is length/2 (rounded down) since they are non-overlapping
+            for (int n = 1; n <= binaryLength / 2; ++n) {
+          // An integer with the lower n bits set.
+          int mask = (1 << n) - 1;
+    
+          int upperBoundForI = binaryLength - 2 * n + 1;
+          int upperBoundForJ = binaryLength - n + 1;
+    
+                boolean found = false;
+                // first index (the first index of the first copy):
+          lookingForSubstringOfLengthN:
+                for (int i = 0; i < upperBoundForI; i++) {
+                    // second index (substrings are non-overlapping):
+                    for (int j = i + n; j < upperBoundForJ; j++) {
+              if (
+                ((number >> i) & mask)
+                == ((number >> j) & mask)
+              ) {
+                            found = true;
+                break lookingForSubstringOfLengthN;
+                        }
                     }
                 }
+    
+          if (found) {
+                    longestSubstringLengthSoFar = n;
+                } else {
+                    return longestSubstringLengthSoFar;
+                }
             }
+    
+            return longestSubstringLengthSoFar;
         }
-        return max;
-    }
 	public static int longestRepeatedSubstring(int number) {
 		String binary = Integer.toBinaryString(number);
         int n = binary.length();
