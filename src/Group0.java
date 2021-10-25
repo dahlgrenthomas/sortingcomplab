@@ -99,8 +99,8 @@ public class Group0 {
 			int digits1 = Helper2.numBinaryOnes(n1);
 			int digits2 = Helper2.numBinaryOnes(n2);
 			
-			int lengthSubstring1 = Helper2.lengthLongestRepeatedSubstring(Integer.toBinaryString(n1));
-			int lengthSubstring2 = Helper2.lengthLongestRepeatedSubstring(Integer.toBinaryString(n2));
+			int lengthSubstring1 = Helper2.lengthLongestRepeatedSubstring(n1);
+			int lengthSubstring2 = Helper2.lengthLongestRepeatedSubstring(n2);
 			
 			if (digits1 != digits2) return (digits1 - digits2);
 			// executed only of the number of 1s is the same
