@@ -70,9 +70,12 @@ public class Group8 {
             buckets.get(idx).add(toSort[i]);
         }
  
+		long start = System.currentTimeMillis();
         for (int i = 0; i < 24; i++) {
 			buckets2(buckets.get(i));
         }
+		long end = System.currentTimeMillis();
+		System.out.println(end - start);
  
         int index = 0;
         for (int i = 0; i < 24; i++) {
