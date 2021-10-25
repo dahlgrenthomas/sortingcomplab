@@ -5,12 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
-import java.util.Collections;
-/**
- * @author Thomas Dahlgren
- * @author Josh Quist
- */
-public class Group8 {
+
+public class Group0 {
 
 	public static void main(String[] args) throws InterruptedException, FileNotFoundException {
 		
@@ -36,7 +32,7 @@ public class Group8 {
 		Thread.sleep(10); //to let other things finish before timing; adds stability of runs
 
 		long start = System.currentTimeMillis();
-
+		
 		sort(toSort);
 		
 		long end = System.currentTimeMillis();
@@ -53,62 +49,7 @@ public class Group8 {
 	// You would need to provide your own function that prints your sorted array to 
 	// a file in the exact same format that my program outputs
 	private static void sort(Integer[] toSort) {
-		int n = toSort.length;
-		if (n <= 0)
-            return;
-
-		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
- 
-        for (int i = 0; i < 24; i++) {
-			buckets.add(new ArrayList<Integer>());
-        }
- 
-        for (int i = 0; i < n; i++) {
-            //int idx = Integer.bitCount(toSort[i]);
-            int idx = Helper.numBinaryOnes(toSort[i]);
-            buckets.get(idx).add(toSort[i]);
-        }
- 
-        for (int i = 0; i < 24; i++) {
-			buckets2(buckets.get(i));
-        }
- 
-        int index = 0;
-        for (int i = 0; i < 24; i++) {
-            for (int j = 0; j < buckets.get(i).size(); j++) {
-                toSort[index++] = buckets.get(i).get(j);
-            }
-        }
-	}
-
-    private static void buckets2(ArrayList<Integer> toSort){
-		int n = toSort.size();
-		if (n <= 0)
-            return;
- 
-		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
- 
-        for (int i = 0; i < 13; i++) {
-			buckets.add(new ArrayList<Integer>());
-        }
- 
-        for (int i = 0; i < n; i++) {
-			//int idx = Helper.longestRepeatedSubstring(toSort.get(i));
-            //int idx = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
-            int idx = Helper.MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(toSort.get(i)));
-			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
-			if(index<0){
-				index = index*(-1) - 1;
-			}
-            buckets.get(idx).add(index, toSort.get(i));
-        }
- 
-        int index = 0;
-        for (int i = 0; i < 13; i++) {
-            for (int j = 0; j < buckets.get(i).size(); j++) {
-                toSort.set(index++, buckets.get(i).get(j));
-            }
-        }
+		Arrays.sort(toSort, new BinaryComparator());
 	}
 	
 	private static String[] readData(String inFile) throws FileNotFoundException {
@@ -150,6 +91,26 @@ public class Group8 {
 		out.close();
 
 	}
+	
+	private static class BinaryComparator implements Comparator<Integer> {
 
+		@Override
+		public int compare(Integer n1, Integer n2) {
+			int digits1 = Helper2.numBinaryOnes(n1);
+			int digits2 = Helper.numBinaryOnes(n2);
+			
+			int lengthSubstring1 = Helper2.lengthLongestRepeatedSubstring(Integer.toBinaryString(n1));
+			int lengthSubstring2 = Helper2.lengthLongestRepeatedSubstring(Integer.toBinaryString(n2));
+			
+			if (digits1 != digits2) return (digits1 - digits2);
+			// executed only of the number of 1s is the same
+			if (lengthSubstring1 != lengthSubstring2) return (lengthSubstring1 - lengthSubstring2);
+			
+			// executed only if both of the other ones were the same:
+			return (n1 - n2);
+		}
+		
+	}
+	
 
 }

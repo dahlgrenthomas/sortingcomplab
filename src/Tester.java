@@ -36,13 +36,13 @@ public class Tester {
 		
 		Thread.sleep(10); //to let other things finish before timing; adds stability of runs
 
-		long start2 = System.currentTimeMillis();
+		start = System.currentTimeMillis();
 		
 		buckets(ourSort);
 		
-		long end2 = System.currentTimeMillis();
+		end = System.currentTimeMillis();
 		
-		System.out.println("It took our sort " + (end2 - start2) + " milis");
+		System.out.println("It took our sort " + (end - start) + " milis");
 		
 		System.out.println(Arrays.equals(toSort, ourSort));
 
@@ -100,7 +100,7 @@ public class Tester {
         }
  
         for (int i = 0; i < n; i++) {
-			int idx = longestRepeatedSubstring(toSort.get(i));
+			int idx = Helper.longestRepeatedSubstring(toSort.get(i));
             //int idx = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
 			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
 			if(index<0){
@@ -176,38 +176,59 @@ public class Tester {
 		}
 		
 	}
-	private static int longestRepeatedSubstring(int number) {
-		String str = Integer.toBinaryString(number);
+
+	private static String MaxRepeatNonOverlapSubstrLps(String str)
+    {
         int n = str.length();
-        int LCSRe[][] = new int[n + 1][n + 1];
- 
-        String res = "";
-        int res_length = 0;
- 
-        int i, index = 0;
-        for (i = 1; i <= n; i++) {
-            for (int j = i + 1; j <= n; j++) {
-                if (str.charAt(i - 1) == str.charAt(j - 1)
-                        && LCSRe[i - 1][j - 1] < (j - i)) {
-                    LCSRe[i][j] = LCSRe[i - 1][j - 1] + 1;
-                    if (LCSRe[i][j] > res_length) {
-                        res_length = LCSRe[i][j];
-                        index = Math.max(i, index);
+        int index = 0;
+        int max = 0;
+
+        int[] lps = new int[n];
+        for (int start = 0; start < n; start++)
+        {
+            int i = start;
+            for (int j = i + 1; j < n; )
+            {
+                if (str.substring(i) == str.substring(j))
+                {
+                    // Added for non overlapping
+                    if (j - i > i - start)
+                    {
+                        lps[j] = i - start + 1;
+                        if (lps[j] > max)
+                        {
+                            max = lps[j];
+                            index = start;
+                        }
+
+                        i++;
+                        j++;
                     }
-                } else {
-                    LCSRe[i][j] = 0;
+                    else
+                    {
+                        i = lps[i];
+                    }
+                }
+                else if (i != start) // start is used instead of 0
+                {
+                    i = lps[i - 1];
+                    if (i < start) // set the start
+                    {
+                        i = start;
+                    }
+                }
+                else
+                {
+                    lps[j] = 0;
+                    j++;
                 }
             }
+            lps = new int[n];
         }
- 
-        if (res_length > 0) {
-            for (i = index - res_length + 1; i <= index; i++) {
-                res += str.charAt(i - 1);
-            }
-        }
- 
-        return res.length();
+
+        return str.substring(index, max);
     }
+
 	
 
 }
