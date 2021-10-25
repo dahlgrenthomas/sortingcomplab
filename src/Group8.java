@@ -2,8 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Scanner;
 import java.util.Collections;
 /**
@@ -111,19 +109,19 @@ public class Group8 {
         }
 	}
 	
-	private static String[] readData(String inFile) throws FileNotFoundException {
-		ArrayList<String> input = new ArrayList<>();
-		Scanner in = new Scanner(new File(inFile));
+	// private static String[] readData(String inFile) throws FileNotFoundException {
+	// 	ArrayList<String> input = new ArrayList<>();
+	// 	Scanner in = new Scanner(new File(inFile));
 		
-		while(in.hasNext()) {
-			input.add(in.next());
-		}
+	// 	while(in.hasNext()) {
+	// 		input.add(in.next());
+	// 	}
 				
-		in.close();
+	// 	in.close();
 		
-		// the string array is passed just so that the correct type can be created
-		return input.toArray(new String[0]);
-	}
+	// 	// the string array is passed just so that the correct type can be created
+	// 	return input.toArray(new String[0]);
+	// }
 	
 	private static Integer[] readInts(String inFile) throws FileNotFoundException {
 		ArrayList<Integer> input = new ArrayList<>();

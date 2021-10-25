@@ -15,7 +15,7 @@ import java.util.Random;
 public class DataGenerator {
 	
 	public static void main(String [] args) throws FileNotFoundException{
-		int seed = 1111; // change the seed to get different data
+		//int seed = 1111; // change the seed to get different data
 		int seed2 = 6666;
 		Random r = new Random(seed2);
 		

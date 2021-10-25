@@ -24,7 +24,6 @@ public class Helper2 {
 		return count;
 	}
 	
-	
 	public static int lengthLongestRepeatedSubstring(String binary) {
         int n = binary.length();
 
