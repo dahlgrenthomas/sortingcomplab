@@ -100,7 +100,8 @@ public class Tester {
         }
  
         for (int i = 0; i < n; i++) {
-			int idx = Helper.longestRepeatedSubstring(toSort.get(i));
+			//int idx = Helper.longestRepeatedSubstring(toSort.get(i));
+			int idx = Helper.MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(toSort.get(i)));
             //int idx = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
 			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
 			if(index<0){

@@ -97,7 +97,7 @@ public class Group0 {
 		@Override
 		public int compare(Integer n1, Integer n2) {
 			int digits1 = Helper2.numBinaryOnes(n1);
-			int digits2 = Helper.numBinaryOnes(n2);
+			int digits2 = Helper2.numBinaryOnes(n2);
 			
 			int lengthSubstring1 = Helper2.lengthLongestRepeatedSubstring(Integer.toBinaryString(n1));
 			int lengthSubstring2 = Helper2.lengthLongestRepeatedSubstring(Integer.toBinaryString(n2));

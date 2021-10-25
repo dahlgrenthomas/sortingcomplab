@@ -131,28 +131,20 @@ public class Helper {
  
         return res.length();
     }
-	public static int MaxRepeatNonOverlapSubstrDp(String str)
-    {
+	public static int MaxRepeatNonOverlapSubstrDp(String str){
         int n = str.length();
-
         int[][] dp = new int[n + 1][n + 1];
-        // dp [i,j] denotes the length of substring at i, j which is repeating 
-        // and non overlapping
+        int max = 0;
 
-        var index = 0;
-        var max = 0;
-
-        for (var i = 1; i <= n; i++)
+        for (int i = 1; i <= n; i++)
         {
-            for (var j = i + 1; j <= n; j++)
+            for (int j = i + 1; j <= n; j++)
             {
-                // essential condition to see if the elements repeats
                 if (str.charAt(j-1) == str.charAt(i-1) && (j - i) > dp[i - 1][j - 1]){
                     dp[i][j] = 1 + dp[i - 1][j - 1];
                     if (dp[i][j] > max)
                     {
                         max = dp[i][j];
-                        index = i - max;
                     }
                 }
             }

@@ -2,8 +2,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 /**
  * @author Thomas Dahlgren
  * @author Josh Quist
@@ -147,6 +150,25 @@ public class Group8 {
 		}
 		out.close();
 
+	}
+	private static class BinaryComparator implements Comparator<Integer> {
+
+		@Override
+		public int compare(Integer n1, Integer n2) {
+			int digits1 = Helper2.numBinaryOnes(n1);
+			int digits2 = Helper.numBinaryOnes(n2);
+			
+			int lengthSubstring1 = Helper2.lengthLongestRepeatedSubstring(Integer.toBinaryString(n1));
+			int lengthSubstring2 = Helper2.lengthLongestRepeatedSubstring(Integer.toBinaryString(n2));
+			
+			if (digits1 != digits2) return (digits1 - digits2);
+			// executed only of the number of 1s is the same
+			if (lengthSubstring1 != lengthSubstring2) return (lengthSubstring1 - lengthSubstring2);
+			
+			// executed only if both of the other ones were the same:
+			return (n1 - n2);
+		}
+		
 	}
 
 

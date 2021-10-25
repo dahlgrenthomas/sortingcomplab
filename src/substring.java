@@ -1,8 +1,11 @@
 public class substring {
     public static void main(String args[]){
-        long start = System.nanoTime();
-        MaxRepeatNonOverlapSubstrDp("0101011111100000111101010011101");
-        long end = System.nanoTime();
+        long start = System.currentTimeMillis();
+        for(int i = 0; i<10000; i++){
+            //MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(i*3000));
+            longestRepeatedSubstring(Integer.toBinaryString(i*3000));
+        }
+        long end = System.currentTimeMillis();
         System.out.println(end-start);
     }
     private static int MaxRepeatNonOverlapSubstrDp(String str)
