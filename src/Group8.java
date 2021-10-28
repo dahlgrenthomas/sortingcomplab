@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+
 /**
  * @author Thomas Dahlgren
  * @author Josh Quist
@@ -66,7 +65,7 @@ public class Group8 {
  
         for (int i = 0; i < n; i++) {
             //int idx = Integer.bitCount(toSort[i]);
-            int idx = Helper.numBinaryOnes(toSort[i]);
+            int idx = countSetBits(toSort[i]);
             buckets.get(idx).add(toSort[i]);
         }
  
@@ -97,10 +96,7 @@ public class Group8 {
         }
  
         for (int i = 0; i < n; i++) {
-			//int idx = Helper.longestRepeatedSubstring(toSort.get(i));
-            //int idx = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
-            int idx = Helper.MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(toSort.get(i)));
-			//int idx = Helper2.lengthLongestRepeatedSubstring(toSort.get(i));
+            int idx = MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(toSort.get(i)));
 			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
 			if(index<0){
 				index = index*(-1) - 1;
@@ -155,6 +151,35 @@ public class Group8 {
 		out.close();
 
 	}
+	//Brian Kernighan's Algorithm recursively done.
+	public static int countSetBits(int n) { 
+          
+        // base case 
+        if (n == 0) 
+            return 0; 
+        else
+            return 1 + countSetBits(n & (n - 1)); 
+    } 
+	public static int MaxRepeatNonOverlapSubstrDp(String str){
+        int n = str.length();
+        int[][] dp = new int[n + 1][n + 1];
+        int max = 0;
+
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = i + 1; j <= n; j++)
+            {
+                if (str.charAt(j-1) == str.charAt(i-1) && (j - i) > dp[i - 1][j - 1]){
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                    if (dp[i][j] > max)
+                    {
+                        max = dp[i][j];
+                    }
+                }
+            }
+        }
+        return max;
+    }
 	// private static class BinaryComparator implements Comparator<Integer> {
 
 	// 	@Override
@@ -174,33 +199,5 @@ public class Group8 {
 	// 	}
 		
 	// }
-	public static int findLongestSequence(String binaryStr){
-		{
-			int length = binaryStr.length();
-			int table[][]=new int[length+1][length+1];
-			int max=0;
-			int index=0;
-			for(int i=1;i<=length;++i)
-			{
-			 for(int j=i+1;j<=length;++j)
-			 {
-			  if(binaryStr.charAt(i-1)==binaryStr.charAt(j-1) && j-i>table[i-1][j-1])
-			  {
-				table[i][j]=table[i-1][j-1]+1;
-				if(max<table[i][j])
-				  {
-					max=table[i][j];
-					index=Math.max(i,index);
-				  }
-			  }
-			  else
-			   table[i][j]=0;
-			 }
-			}
-			return binaryStr.substring(index-max,index).length();
-		}
-			
-}
-
 
 }
