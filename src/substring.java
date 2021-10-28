@@ -1,11 +1,21 @@
 public class substring {
     public static void main(String args[]){
-        long start = System.nanoTime();
+        long start = System.currentTimeMillis();
 
-        System.out.println(MaxRepeatNonOverlapSubstrDp("1000100010101111110000001111110100010"));
-        long end = System.nanoTime();
+        System.out.println(MaxRepeatNonOverlapSubstrDp("25251000252568010151515102315601510001213102102230502023020560undredhundredmillionbillion"));
+        long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
+    public static int longestDupSubstring(String s){
+        String res = "";
+        for (int i = 0; i < s.length(); i++) {
+            if (s.substring(0,i).contains(s.substring(i - res.length(), i+1))) {
+                res = s.substring(i - res.length(), i+1);
+            }
+        }
+        return res.length();
+    }
+    //https://www.geeksforgeeks.org/length-of-the-longest-substring-without-repeating-characters/
     private static int MaxRepeatNonOverlapSubstrLps(String str)
     {
         var index = 0;
@@ -64,10 +74,7 @@ public class substring {
         int[][] dp = new int[n + 1][n + 1];
         // dp [i,j] denotes the length of substring at i, j which is repeating 
         // and non overlapping
-
-        var index = 0;
         var max = 0;
-
         for (var i = 1; i <= n; i++)
         {
             for (var j = i + 1; j <= n; j++)
@@ -78,7 +85,6 @@ public class substring {
                     if (dp[i][j] > max)
                     {
                         max = dp[i][j];
-                        index = i - max;
                     }
                 }
             }
