@@ -1,12 +1,61 @@
 public class substring {
     public static void main(String args[]){
-        long start = System.currentTimeMillis();
-        for(int i = 0; i<5000; i++){
-            MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(i*3000));
-            //longestRepeatedSubstring(Integer.toBinaryString(i*3000));
+        long start = System.nanoTime();
+
+        System.out.println(MaxRepeatNonOverlapSubstrDp("1000100010101111110000001111110100010"));
+        long end = System.nanoTime();
+        System.out.println(end - start);
+    }
+    private static int MaxRepeatNonOverlapSubstrLps(String str)
+    {
+        var index = 0;
+        var max = 0;
+		int n = str.length();
+
+        int[] lps = new int[n];
+        for (var start = 0; start < n; start++)
+        {
+            var i = start;
+            for (var j = i + 1; j < n; )
+            {
+                if (str.charAt(i) == str.charAt(j))
+                {
+                    // Added for non overlapping
+                    if (j - i > i - start)
+                    {
+                        lps[j] = i - start + 1;
+                        if (lps[j] > max)
+                        {
+                            max = lps[j];
+                            index = start;
+                        }
+
+                        i++;
+                        j++;
+                    }
+                    else
+                    {
+                        i = lps[i];
+                    }
+                }
+                else if (i != start) // start is used instead of 0
+                {
+                    i = lps[i - 1];
+                    if (i < start) // set the start
+                    {
+                        i = start;
+                    }
+                }
+                else
+                {
+                    lps[j] = 0;
+                    j++;
+                }
+            }
+            lps = new int[n];
         }
-        long end = System.currentTimeMillis();
-        System.out.println(end-start);
+
+        return max;
     }
     private static int MaxRepeatNonOverlapSubstrDp(String str)
     {

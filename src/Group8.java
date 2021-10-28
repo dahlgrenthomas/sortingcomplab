@@ -58,24 +58,21 @@ public class Group8 {
             return;
 
 		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
- 
+
         for (int i = 0; i < 24; i++) {
 			buckets.add(new ArrayList<Integer>());
         }
- 
+
         for (int i = 0; i < n; i++) {
             //int idx = Integer.bitCount(toSort[i]);
             int idx = countSetBits(toSort[i]);
             buckets.get(idx).add(toSort[i]);
         }
- 
-		long start = System.currentTimeMillis();
+
         for (int i = 0; i < 24; i++) {
 			buckets2(buckets.get(i));
         }
-		long end = System.currentTimeMillis();
-		System.out.println(end - start);
- 
+
         int index = 0;
         for (int i = 0; i < 24; i++) {
             for (int j = 0; j < buckets.get(i).size(); j++) {
@@ -160,6 +157,7 @@ public class Group8 {
         else
             return 1 + countSetBits(n & (n - 1)); 
     } 
+	//Source: https://blog.vcillusion.co.in/longest-repeating-non-overlapping-substring/
 	public static int MaxRepeatNonOverlapSubstrDp(String str){
         int n = str.length();
         int[][] dp = new int[n + 1][n + 1];
