@@ -44,7 +44,6 @@ public class Group8 {
 		System.out.println(end - start);
 		
 		writeOutResult(toSort, outFileName);
-
 	}
 	
 	// YOUR SORTING METHOD GOES HERE. 
@@ -64,8 +63,7 @@ public class Group8 {
         }
 
         for (int i = 0; i < n; i++) {
-            //int idx = Integer.bitCount(toSort[i]);
-            int idx = countSetBits(toSort[i]);
+            int idx = Integer.bitCount(toSort[i]);
             buckets.get(idx).add(toSort[i]);
         }
 
@@ -148,15 +146,7 @@ public class Group8 {
 		out.close();
 
 	}
-	//Brian Kernighan's Algorithm recursively done.
-	public static int countSetBits(int n) { 
-          
-        // base case 
-        if (n == 0) 
-            return 0; 
-        else
-            return 1 + countSetBits(n & (n - 1)); 
-    } 
+
 	//Source: https://blog.vcillusion.co.in/longest-repeating-non-overlapping-substring/
 	public static int MaxRepeatNonOverlapSubstrDp(String str){
         int n = str.length();
