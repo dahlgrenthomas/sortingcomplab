@@ -1,3 +1,6 @@
+import java.util.HashSet;
+import java.util.Set;
+
 public class substring {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
@@ -6,6 +9,7 @@ public class substring {
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
+
     public static int longestDupSubstring(String s){
         String res = "";
         for (int i = 0; i < s.length(); i++) {

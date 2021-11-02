@@ -86,12 +86,12 @@ public class Group8 {
  
 		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
  
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 14; i++) {
 			buckets.add(new ArrayList<Integer>());
         }
  
         for (int i = 0; i < n; i++) {
-            int idx = MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(toSort.get(i)));
+            int idx = computeLPSArray(Integer.toBinaryString(toSort.get(i)));
 			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
 			if(index<0){
 				index = index*(-1) - 1;
@@ -100,7 +100,7 @@ public class Group8 {
         }
  
         int index = 0;
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 14; i++) {
             for (int j = 0; j < buckets.get(i).size(); j++) {
                 toSort.set(index++, buckets.get(i).get(j));
             }
@@ -147,6 +147,60 @@ public class Group8 {
 
 	}
 
+	public static int computeLPSArray(String pat)
+    {
+		int M = pat.length();
+        int lps[] = new int[M];
+		
+        int len = 0;
+        int i = 1;
+        lps[0] = 0;
+        while (i < M) {
+            if (pat.charAt(i) == pat.charAt(len)) {
+                len++;
+                if(len <= M/2){
+                    lps[i] = len;
+                }
+                else{lps[i] = 0;
+                }
+                i++;
+            }
+            else 
+            {
+                if (len != 0) {
+                    len = lps[len - 1];
+
+                }
+                else 
+                {
+                    if(len <= M/2){
+                        lps[i] = len;
+                    }
+                    else{lps[i] = 0;
+                    }
+                    i++;
+                }
+            }
+        }
+        return Arrays.stream(lps).max().getAsInt();
+    }
+	
+	public static int lengthLongestRepeatedSubstring(final String s) {
+        if (s.length() == 1) {
+            return 0;
+        }
+        int n = 0;
+        int n2 = 1;
+        for (String s2 = s.substring(n, n2), s3 = s.substring(n2); s3.contains(s2) || s3.length() > n2 - n; s3 = s.substring(n2)) {
+            if (s3.contains(s2)) {
+                s2 = s.substring(n, ++n2);
+            }
+            else {
+                s2 = s.substring(++n, ++n2);
+            }
+        }
+        return n2 - n - 1;
+    }
 	//Source: https://blog.vcillusion.co.in/longest-repeating-non-overlapping-substring/
 	public static int MaxRepeatNonOverlapSubstrDp(String str){
         int n = str.length();
