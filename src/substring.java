@@ -5,7 +5,7 @@ public class substring {
     public static void main(String args[]){
         long start = System.currentTimeMillis();
 
-        System.out.println(MaxRepeatNonOverlapSubstrDp("25251000252568010151515102315601510001213102102230502023020560undredhundredmillionbillion"));
+        System.out.println(longestDupSubstring("10101010101000010000"));
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
@@ -13,8 +13,12 @@ public class substring {
     public static int longestDupSubstring(String s){
         String res = "";
         for (int i = 0; i < s.length(); i++) {
-            if (s.substring(0,i).contains(s.substring(i - res.length(), i+1))) {
+            if (s.substring(0,i).contains(s.substring(i - res.length(), i+1)) && (i - res.length() <= i)){
+                System.out.println("Where the i is " + (i));
+                System.out.println("Where the index is " + (i - res.length()));
                 res = s.substring(i - res.length(), i+1);
+                System.out.println(res);
+                
             }
         }
         return res.length();

@@ -100,9 +100,8 @@ public class Tester {
         }
  
         for (int i = 0; i < n; i++) {
-			//int idx = Helper.longestRepeatedSubstring(toSort.get(i));
-			int idx = Helper.MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(toSort.get(i)));
-            //int idx = Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
+
+			int idx = lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
 			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
 			if(index<0){
 				index = index*(-1) - 1;
@@ -118,6 +117,22 @@ public class Tester {
         }
 	}
 	
+	public static int lengthLongestRepeatedSubstring(final String s) {
+        if (s.length() == 1) {
+            return 0;
+        }
+        int n = 0;
+        int n2 = 1;
+        for (String s2 = s.substring(n, n2), s3 = s.substring(n2); s3.contains(s2) || s3.length() > n2 - n; s3 = s.substring(n2)) {
+            if (s3.contains(s2)) {
+                s2 = s.substring(n, ++n2);
+            }
+            else {
+                s2 = s.substring(++n, ++n2);
+            }
+        }
+        return n2 - n - 1;
+    }
 	private static String[] readData(String inFile) throws FileNotFoundException {
 		ArrayList<String> input = new ArrayList<>();
 		Scanner in = new Scanner(new File(inFile));
