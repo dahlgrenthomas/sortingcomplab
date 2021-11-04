@@ -21,14 +21,8 @@ public class Tester {
 		String outFileName = args[1];
 		
 		// read as strings
-		Integer [] data = new Integer[10000000];
+		Integer [] data = readInts(inputFileName);
 		
-
-		
-
-		for(int i = 0; i < 10000000; i++){
-			data[i] = i;
-		}
 
 		Integer [] toSort = data.clone();
 		Integer [] ourSort = data.clone();
@@ -105,7 +99,7 @@ public class Tester {
         }
  
         for (int i = 0; i < n; i++) {
-            int idx = longestDupSubstring(Integer.toBinaryString(toSort.get(i)));
+            int idx = longestDupSubstringNoOverlap(Integer.toBinaryString(toSort.get(i)));
 			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
 			if(index<0){
 				index = index*(-1) - 1;
@@ -121,17 +115,16 @@ public class Tester {
         }
 	}
 
-    public static int longestDupSubstring(String s){
+    public static int longestDupSubstringNoOverlap(String s){
         int max = 0;
-        int frontIndex = 0;
         int backIndex = 1;
         int length = s.length();
         for (int i = 0; i < length; i++) {
             if(i + backIndex > length){
                 return max;
             }
-            else if (s.substring(frontIndex,i).contains(s.substring(i, i + backIndex))){
-                while(i + backIndex <= s.length() && s.substring(frontIndex,i).contains(s.substring(i, i + backIndex))){
+            else if (s.substring(0,i).contains(s.substring(i, i + backIndex))){
+                while(i + backIndex <= s.length() && s.substring(0,i).contains(s.substring(i, i + backIndex))){
                     max = backIndex;
                     backIndex++;
                 }
