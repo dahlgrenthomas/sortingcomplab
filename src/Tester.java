@@ -119,7 +119,7 @@ public class Tester {
         int max = 0;
         int backIndex = 1;
         int length = s.length();
-        for (int i = 0; i < length; i++) {
+        for (int i = 1; i < length; i++) {
             if(i + backIndex > length){
                 return max;
             }

@@ -29,23 +29,17 @@ class KMP_String_Matching {
     // Driver program to test above function
     public static void main(String args[])
     {
-        String txt = Integer.toBinaryString(3);
+        // String txt = Integer.toBinaryString(3);
 
+        // System.out.println(longestDupSubstring(txt));
+        // System.out.println(Helper.lengthLongestRepeatedSubstring(txt));
 
-
-        System.out.println(longestDupSubstring(txt));
-        System.out.println(Helper.lengthLongestRepeatedSubstring(txt));
-
-
-
-        // boolean result = true;
-        // for(int i = 0; i < 10000000; i++){
-        //     if(Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(i)) != longestDupSubstring(Integer.toBinaryString(i))){
-        //         result = false;
-        //         break;
-        //     }
-        // }
-        // System.out.println(result);
+        long start = System.currentTimeMillis();
+        for(int i = 0; i < 10000000; i++){
+            longestDupSubstring(Integer.toBinaryString(i));
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
 
     }
 
