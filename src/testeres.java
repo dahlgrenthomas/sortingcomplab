@@ -7,14 +7,13 @@ class KMP_String_Matching {
     public static int longestDupSubstring(String s){
         String res = "";
         int g = 0;
-        int indy = 1;
+
         for (int i = 0; i < s.length(); i++) {
-            if(i + indy > s.length()){
+            if(i + 1 + res.length() > s.length()){
                 g++;
             }
-            else if (s.substring(g,i).contains(s.substring(i, i + indy))){
-                res = s.substring(i , i + indy);
-                indy++;
+            else if (s.substring(g,i).contains(s.substring(i, i + res.length())) && (i+1+res.length() - i) > res.length()){
+                res = s.substring(i , i + 1 + res.length());
                 //System.out.println(i + "  " + (i+indy));
                 System.out.println(res);
             }
