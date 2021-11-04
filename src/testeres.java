@@ -7,30 +7,36 @@ class KMP_String_Matching {
     public static int longestDupSubstring(String s){
         String res = "";
         int g = 0;
+        int fred = 1;
 
         for (int i = 0; i < s.length(); i++) {
-            if(i + 1 + res.length() > s.length()){
+            if(i + fred > s.length()){
                 g++;
             }
-            else if (s.substring(g,i).contains(s.substring(i, i + res.length())) && (i+1+res.length() - i) > res.length()){
-                res = s.substring(i , i + 1 + res.length());
-                //System.out.println(i + "  " + (i+indy));
-                System.out.println(res);
+            else if (s.substring(g,i).contains(s.substring(i, i + fred))){
+                while(i + fred <= s.length() && s.substring(g,i).contains(s.substring(i, i + fred))){
+                    res = s.substring(i , i + fred);
+                    fred++;
+                    //System.out.println(i + "  " + (i+indy));
+                    System.out.println(res);
+                    System.out.println("This is the base string "+ s.substring(g,i));
+                }
+
             }
+
         }
         return res.length();
     }
     // Driver program to test above function
     public static void main(String args[])
     {
-        String txt = "100000010000001";
+        String txt = "110000000000001000";
         // int length = txt.length();
         // int lps[] = new int[length];
         //double dub = (double)9/ (double) 3;
         System.out.println(longestDupSubstring(txt));
-        for(int j = 0; j < txt.length()-1; j++){
-            //System.out.println(lps[j]);
-        }
+        System.out.println(Helper.lengthLongestRepeatedSubstring(txt));
+
     }
 
 }

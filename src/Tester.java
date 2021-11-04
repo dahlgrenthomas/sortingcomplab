@@ -101,7 +101,7 @@ public class Tester {
  
         for (int i = 0; i < n; i++) {
 
-			int idx = MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(toSort.get(i)));
+			int idx = longestDupSubstring(Integer.toBinaryString(toSort.get(i)));
 			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
 			if(index<0){
 				index = index*(-1) - 1;
@@ -116,6 +116,24 @@ public class Tester {
             }
         }
 	}
+	public static int longestDupSubstring(String s){
+        String res = "";
+        int g = 0;
+        int fred = 1;
+
+        for (int i = 0; i < s.length(); i++) {
+            if(i + fred > s.length()){
+                g++;
+            }
+            else if (s.substring(g,i).contains(s.substring(i, i + fred))){
+                while(i + fred <= s.length() && s.substring(g,i).contains(s.substring(i, i + fred))){
+                    res = s.substring(i , i + fred);
+                    fred++;
+                }
+            }
+        }
+        return res.length();
+    }
 	//Source: https://blog.vcillusion.co.in/longest-repeating-non-overlapping-substring/
 	public static int MaxRepeatNonOverlapSubstrDp(String str){
         int n = str.length();

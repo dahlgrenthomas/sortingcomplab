@@ -149,13 +149,20 @@ public class Group8 {
     public static int longestDupSubstring(String s){
         String res = "";
         int g = 0;
+        int fred = 1;
+
         for (int i = 0; i < s.length(); i++) {
-            if(i + res.length() > s.length()){
+            if(i + fred > s.length()){
                 g++;
             }
-            else if (s.substring(g,i).contains(s.substring(i, i + res.length())) && (i + res.length()) - i > res.length()) {
-                res = s.substring(i , i + 1 + res.length());
+            else if (s.substring(g,i).contains(s.substring(i, i + fred))){
+                while(i + fred <= s.length() && s.substring(g,i).contains(s.substring(i, i + fred))){
+                    res = s.substring(i , i + fred);
+                    fred++;
+                }
+
             }
+
         }
         return res.length();
     }
