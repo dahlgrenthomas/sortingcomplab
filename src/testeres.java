@@ -39,7 +39,7 @@ class KMP_String_Matching {
 
 
         // boolean result = true;
-        // for(int i = 0; i < 10000001; i++){
+        // for(int i = 0; i < 10000000; i++){
         //     if(Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(i)) != longestDupSubstring(Integer.toBinaryString(i))){
         //         result = false;
         //         break;
@@ -50,4 +50,3 @@ class KMP_String_Matching {
     }
 
 }
-// This code has been contributed by Amit Khandelwal.
