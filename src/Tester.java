@@ -101,7 +101,7 @@ public class Tester {
  
         for (int i = 0; i < n; i++) {
 
-			int idx = lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
+			int idx = MaxRepeatNonOverlapSubstrDp(Integer.toBinaryString(toSort.get(i)));
 			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
 			if(index<0){
 				index = index*(-1) - 1;
@@ -116,7 +116,51 @@ public class Tester {
             }
         }
 	}
-	
+	//Source: https://blog.vcillusion.co.in/longest-repeating-non-overlapping-substring/
+	public static int MaxRepeatNonOverlapSubstrDp(String str){
+        int n = str.length();
+        int[][] dp = new int[n + 1][n + 1];
+        int max = 0;
+
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = i + 1; j <= n; j++)
+            {
+                if (str.charAt(j-1) == str.charAt(i-1) && (j - i) > dp[i - 1][j - 1]){
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                    if (dp[i][j] > max)
+                    {
+                        max = dp[i][j];
+                    }
+                }
+            }
+        }
+        return max;
+    }
+	public static int findLongestSequence(String binaryStr){
+			int length = binaryStr.length();
+			int table[][]=new int[length+1][length+1];
+			int max=0;
+			int index=0;
+			for(int i=1;i<=length;++i)
+			{
+			 for(int j=i+1;j<=length;++j)
+			 {
+			  if(binaryStr.charAt(i-1)==binaryStr.charAt(j-1) && j-i>table[i-1][j-1])
+			  {
+				table[i][j]=table[i-1][j-1]+1;
+				if(max<table[i][j])
+				  {
+					max=table[i][j];
+					index=Math.max(i,index);
+				  }
+			  }
+			  else
+			   table[i][j]=0;
+			 }
+			}
+			return binaryStr.substring(index-max,index).length();
+}
 	public static int lengthLongestRepeatedSubstring(final String s) {
         if (s.length() == 1) {
             return 0;

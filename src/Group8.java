@@ -91,7 +91,7 @@ public class Group8 {
         }
  
         for (int i = 0; i < n; i++) {
-            int idx = lengthLongestRepeatedSubstring(Integer.toBinaryString(toSort.get(i)));
+            int idx = longestDupSubstring(Integer.toBinaryString(toSort.get(i)));
 			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
 			if(index<0){
 				index = index*(-1) - 1;
@@ -146,43 +146,18 @@ public class Group8 {
 		out.close();
 
 	}
-
-	public static int computeLPSArray(String pat)
-    {
-		int M = pat.length();
-        int lps[] = new int[M];
-		
-        int len = 0;
-        int i = 1;
-        lps[0] = 0;
-        while (i < M) {
-            if (pat.charAt(i) == pat.charAt(len)) {
-                len++;
-                if(len <= M/2){
-                    lps[i] = len;
-                }
-                else{lps[i] = 0;
-                }
-                i++;
+    public static int longestDupSubstring(String s){
+        String res = "";
+        int g = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if(i + res.length() > s.length()){
+                g++;
             }
-            else 
-            {
-                if (len != 0) {
-                    len = lps[len - 1];
-
-                }
-                else 
-                {
-                    if(len <= M/2){
-                        lps[i] = len;
-                    }
-                    else{lps[i] = 0;
-                    }
-                    i++;
-                }
+            else if (s.substring(g,i).contains(s.substring(i, i + res.length())) && (i + res.length()) - i > res.length()) {
+                res = s.substring(i , i + 1 + res.length());
             }
         }
-        return Arrays.stream(lps).max().getAsInt();
+        return res.length();
     }
 	
 	public static int lengthLongestRepeatedSubstring(final String s) {
@@ -201,12 +176,12 @@ public class Group8 {
         }
         return n2 - n - 1;
     }
+
 	//Source: https://blog.vcillusion.co.in/longest-repeating-non-overlapping-substring/
 	public static int MaxRepeatNonOverlapSubstrDp(String str){
         int n = str.length();
         int[][] dp = new int[n + 1][n + 1];
         int max = 0;
-
         for (int i = 1; i <= n; i++)
         {
             for (int j = i + 1; j <= n; j++)
@@ -216,6 +191,7 @@ public class Group8 {
                     if (dp[i][j] > max)
                     {
                         max = dp[i][j];
+
                     }
                 }
             }

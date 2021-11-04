@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class substring {
+public class substring{
     public static void main(String args[]){
         long start = System.currentTimeMillis();
 
@@ -24,17 +24,17 @@ public class substring {
         return res.length();
     }
     //https://www.geeksforgeeks.org/length-of-the-longest-substring-without-repeating-characters/
-    private static int MaxRepeatNonOverlapSubstrLps(String str)
+    public static int MaxRepeatNonOverlapSubstrLps(String str)
     {
-        var index = 0;
-        var max = 0;
+        int index = 0;
+        int max = 0;
 		int n = str.length();
 
         int[] lps = new int[n];
-        for (var start = 0; start < n; start++)
+        for (int start = 0; start < n; start++)
         {
-            var i = start;
-            for (var j = i + 1; j < n; )
+            int i = start;
+            for (int j = i + 1; j < n; )
             {
                 if (str.charAt(i) == str.charAt(j))
                 {
@@ -82,10 +82,10 @@ public class substring {
         int[][] dp = new int[n + 1][n + 1];
         // dp [i,j] denotes the length of substring at i, j which is repeating 
         // and non overlapping
-        var max = 0;
-        for (var i = 1; i <= n; i++)
+        int max = 0;
+        for (int i = 1; i <= n; i++)
         {
-            for (var j = i + 1; j <= n; j++)
+            for (int j = i + 1; j <= n; j++)
             {
                 // essential condition to see if the elements repeats
                 if (str.charAt(j-1) == str.charAt(i-1) && (j - i) > dp[i - 1][j - 1]){

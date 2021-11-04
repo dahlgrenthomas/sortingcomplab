@@ -4,51 +4,31 @@ import java.util.regex.Pattern;
 
 class KMP_String_Matching {
 
-    public static int computeLPSArray(String pat, int lps[])
-    {
-		int M = pat.length();
-		
-        int i = 0;
-        int j = 1;
-        lps[0] = 0;
-        while (j < M) {
-            if (pat.charAt(j) == pat.charAt(i)) {
-                i++;
-                if(i <= M/2){
-                    lps[j] = i;
-                }
-                else{lps[j] = 0;
-                }
-                j++;
+    public static int longestDupSubstring(String s){
+        String res = "";
+        int g = 0;
+        int indy = 1;
+        for (int i = 0; i < s.length(); i++) {
+            if(i + indy > s.length()){
+                g++;
             }
-            else 
-            {
-                if (i != 0) {
-                    i = lps[i - 1];
-
-                }
-                else 
-                {
-                    if(i <= M/2){
-                        lps[j] = i;
-                    }
-                    else{lps[j] = 0;
-                    }
-                    j++;
-                }
+            else if (s.substring(g,i).contains(s.substring(i, i + indy))){
+                res = s.substring(i , i + indy);
+                indy++;
+                //System.out.println(i + "  " + (i+indy));
+                System.out.println(res);
             }
         }
-
-        return Arrays.stream(lps).max().getAsInt();
+        return res.length();
     }
     // Driver program to test above function
     public static void main(String args[])
     {
-        String txt = "babana";
+        String txt = "100000010000001";
         // int length = txt.length();
         // int lps[] = new int[length];
         //double dub = (double)9/ (double) 3;
-        System.out.println(repeatedSubstringPattern(txt));
+        System.out.println(longestDupSubstring(txt));
         for(int j = 0; j < txt.length()-1; j++){
             //System.out.println(lps[j]);
         }
