@@ -5,37 +5,47 @@ import java.util.regex.Pattern;
 class KMP_String_Matching {
 
     public static int longestDupSubstring(String s){
-        String res = "";
+        int res = 0;
         int g = 0;
         int fred = 1;
 
         for (int i = 0; i < s.length(); i++) {
             if(i + fred > s.length()){
-                g++;
+                return res;
             }
             else if (s.substring(g,i).contains(s.substring(i, i + fred))){
                 while(i + fred <= s.length() && s.substring(g,i).contains(s.substring(i, i + fred))){
-                    res = s.substring(i , i + fred);
+                    res = fred;
                     fred++;
-                    //System.out.println(i + "  " + (i+indy));
-                    System.out.println(res);
-                    System.out.println("This is the base string "+ s.substring(g,i));
+                    // System.out.println(res);
+                    // System.out.println("This is the base string "+ s.substring(g,i));
                 }
 
             }
 
         }
-        return res.length();
+        return res;
     }
     // Driver program to test above function
     public static void main(String args[])
     {
-        String txt = "110000000000001000";
-        // int length = txt.length();
-        // int lps[] = new int[length];
-        //double dub = (double)9/ (double) 3;
+        String txt = "1010101010101000000000000000000";
+
+
+
         System.out.println(longestDupSubstring(txt));
         System.out.println(Helper.lengthLongestRepeatedSubstring(txt));
+
+
+
+        boolean result = true;
+        for(int i = 0; i < 10000000; i++){
+            if(Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(i)) != longestDupSubstring(Integer.toBinaryString(i))){
+                result = false;
+                break;
+            }
+        }
+        System.out.println(result);
 
     }
 

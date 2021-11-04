@@ -21,14 +21,21 @@ public class Tester {
 		String outFileName = args[1];
 		
 		// read as strings
-		Integer [] data = readInts(inputFileName);
+		Integer [] data = new Integer[10000000];
 		
+
+		
+
+		for(int i = 0; i < 10000000; i++){
+			data[i] = i;
+		}
+
 		Integer [] toSort = data.clone();
 		Integer [] ourSort = data.clone();
-		
-		long start = System.currentTimeMillis();
-		sort(toSort);
-		long end = System.currentTimeMillis();
+
+		 long start = System.currentTimeMillis();
+		 sort(toSort);
+		 long end = System.currentTimeMillis();
 		
 		System.out.println("It took TIM sort " + (end - start) + " milis");
 		//printArray(sorted, 100);
@@ -64,31 +71,29 @@ public class Tester {
             return;
 
 		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
- 
+
         for (int i = 0; i < 24; i++) {
 			buckets.add(new ArrayList<Integer>());
         }
- 
+
         for (int i = 0; i < n; i++) {
-            int idx = Helper.numBinaryOnes(toSort[i]);
+            int idx = Integer.bitCount(toSort[i]);
             buckets.get(idx).add(toSort[i]);
         }
- 
+
         for (int i = 0; i < 24; i++) {
-			if(buckets.get(i).size() > 1){
-				buckets2(buckets.get(i));
-			}
+			buckets2(buckets.get(i));
         }
- 
+
         int index = 0;
         for (int i = 0; i < 24; i++) {
             for (int j = 0; j < buckets.get(i).size(); j++) {
                 toSort[index++] = buckets.get(i).get(j);
             }
         }
-
 	}
-	private static void buckets2(ArrayList<Integer> toSort){
+
+    private static void buckets2(ArrayList<Integer> toSort){
 		int n = toSort.size();
 		if (n <= 0)
             return;
@@ -100,8 +105,7 @@ public class Tester {
         }
  
         for (int i = 0; i < n; i++) {
-
-			int idx = longestDupSubstring(Integer.toBinaryString(toSort.get(i)));
+            int idx = longestDupSubstring(Integer.toBinaryString(toSort.get(i)));
 			int index = Collections.binarySearch(buckets.get(idx), toSort.get(i));
 			if(index<0){
 				index = index*(-1) - 1;
@@ -116,40 +120,20 @@ public class Tester {
             }
         }
 	}
-	public static int longestDupSubstring(String s){
-        String res = "";
-        int g = 0;
-        int fred = 1;
 
-        for (int i = 0; i < s.length(); i++) {
-            if(i + fred > s.length()){
-                g++;
-            }
-            else if (s.substring(g,i).contains(s.substring(i, i + fred))){
-                while(i + fred <= s.length() && s.substring(g,i).contains(s.substring(i, i + fred))){
-                    res = s.substring(i , i + fred);
-                    fred++;
-                }
-            }
-        }
-        return res.length();
-    }
-	//Source: https://blog.vcillusion.co.in/longest-repeating-non-overlapping-substring/
-	public static int MaxRepeatNonOverlapSubstrDp(String str){
-        int n = str.length();
-        int[][] dp = new int[n + 1][n + 1];
+    public static int longestDupSubstring(String s){
         int max = 0;
-
-        for (int i = 1; i <= n; i++)
-        {
-            for (int j = i + 1; j <= n; j++)
-            {
-                if (str.charAt(j-1) == str.charAt(i-1) && (j - i) > dp[i - 1][j - 1]){
-                    dp[i][j] = 1 + dp[i - 1][j - 1];
-                    if (dp[i][j] > max)
-                    {
-                        max = dp[i][j];
-                    }
+        int frontIndex = 0;
+        int backIndex = 1;
+        int length = s.length();
+        for (int i = 0; i < length; i++) {
+            if(i + backIndex > length){
+                return max;
+            }
+            else if (s.substring(frontIndex,i).contains(s.substring(i, i + backIndex))){
+                while(i + backIndex <= s.length() && s.substring(frontIndex,i).contains(s.substring(i, i + backIndex))){
+                    max = backIndex;
+                    backIndex++;
                 }
             }
         }

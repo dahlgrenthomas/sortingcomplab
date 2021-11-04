@@ -86,7 +86,7 @@ public class Group8 {
  
 		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
  
-        for (int i = 0; i < 14; i++) {
+        for (int i = 0; i < 13; i++) {
 			buckets.add(new ArrayList<Integer>());
         }
  
@@ -100,7 +100,7 @@ public class Group8 {
         }
  
         int index = 0;
-        for (int i = 0; i < 14; i++) {
+        for (int i = 0; i < 13; i++) {
             for (int j = 0; j < buckets.get(i).size(); j++) {
                 toSort.set(index++, buckets.get(i).get(j));
             }
@@ -146,65 +146,26 @@ public class Group8 {
 		out.close();
 
 	}
+
     public static int longestDupSubstring(String s){
-        String res = "";
-        int g = 0;
-        int fred = 1;
-
-        for (int i = 0; i < s.length(); i++) {
-            if(i + fred > s.length()){
-                g++;
-            }
-            else if (s.substring(g,i).contains(s.substring(i, i + fred))){
-                while(i + fred <= s.length() && s.substring(g,i).contains(s.substring(i, i + fred))){
-                    res = s.substring(i , i + fred);
-                    fred++;
-                }
-
-            }
-
-        }
-        return res.length();
-    }
-	
-	public static int lengthLongestRepeatedSubstring(final String s) {
-        if (s.length() == 1) {
-            return 0;
-        }
-        int n = 0;
-        int n2 = 1;
-        for (String s2 = s.substring(n, n2), s3 = s.substring(n2); s3.contains(s2) || s3.length() > n2 - n; s3 = s.substring(n2)) {
-            if (s3.contains(s2)) {
-                s2 = s.substring(n, ++n2);
-            }
-            else {
-                s2 = s.substring(++n, ++n2);
-            }
-        }
-        return n2 - n - 1;
-    }
-
-	//Source: https://blog.vcillusion.co.in/longest-repeating-non-overlapping-substring/
-	public static int MaxRepeatNonOverlapSubstrDp(String str){
-        int n = str.length();
-        int[][] dp = new int[n + 1][n + 1];
         int max = 0;
-        for (int i = 1; i <= n; i++)
-        {
-            for (int j = i + 1; j <= n; j++)
-            {
-                if (str.charAt(j-1) == str.charAt(i-1) && (j - i) > dp[i - 1][j - 1]){
-                    dp[i][j] = 1 + dp[i - 1][j - 1];
-                    if (dp[i][j] > max)
-                    {
-                        max = dp[i][j];
-
-                    }
+        int frontIndex = 0;
+        int backIndex = 1;
+        int length = s.length();
+        for (int i = 0; i < length; i++) {
+            if(i + backIndex > length){
+                return max;
+            }
+            else if (s.substring(frontIndex,i).contains(s.substring(i, i + backIndex))){
+                while(i + backIndex <= s.length() && s.substring(frontIndex,i).contains(s.substring(i, i + backIndex))){
+                    max = backIndex;
+                    backIndex++;
                 }
             }
         }
         return max;
     }
+
 	// private static class BinaryComparator implements Comparator<Integer> {
 
 	// 	@Override
