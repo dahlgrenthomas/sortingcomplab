@@ -132,46 +132,7 @@ public class Tester {
         }
         return max;
     }
-	public static int findLongestSequence(String binaryStr){
-			int length = binaryStr.length();
-			int table[][]=new int[length+1][length+1];
-			int max=0;
-			int index=0;
-			for(int i=1;i<=length;++i)
-			{
-			 for(int j=i+1;j<=length;++j)
-			 {
-			  if(binaryStr.charAt(i-1)==binaryStr.charAt(j-1) && j-i>table[i-1][j-1])
-			  {
-				table[i][j]=table[i-1][j-1]+1;
-				if(max<table[i][j])
-				  {
-					max=table[i][j];
-					index=Math.max(i,index);
-				  }
-			  }
-			  else
-			   table[i][j]=0;
-			 }
-			}
-			return binaryStr.substring(index-max,index).length();
-}
-	public static int lengthLongestRepeatedSubstring(final String s) {
-        if (s.length() == 1) {
-            return 0;
-        }
-        int n = 0;
-        int n2 = 1;
-        for (String s2 = s.substring(n, n2), s3 = s.substring(n2); s3.contains(s2) || s3.length() > n2 - n; s3 = s.substring(n2)) {
-            if (s3.contains(s2)) {
-                s2 = s.substring(n, ++n2);
-            }
-            else {
-                s2 = s.substring(++n, ++n2);
-            }
-        }
-        return n2 - n - 1;
-    }
+
 	private static String[] readData(String inFile) throws FileNotFoundException {
 		ArrayList<String> input = new ArrayList<>();
 		Scanner in = new Scanner(new File(inFile));

@@ -29,7 +29,7 @@ class KMP_String_Matching {
     // Driver program to test above function
     public static void main(String args[])
     {
-        String txt = "1010101010101000000000000000000";
+        String txt = Integer.toBinaryString(3);
 
 
 
@@ -38,14 +38,14 @@ class KMP_String_Matching {
 
 
 
-        boolean result = true;
-        for(int i = 0; i < 10000000; i++){
-            if(Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(i)) != longestDupSubstring(Integer.toBinaryString(i))){
-                result = false;
-                break;
-            }
-        }
-        System.out.println(result);
+        // boolean result = true;
+        // for(int i = 0; i < 10000001; i++){
+        //     if(Helper.lengthLongestRepeatedSubstring(Integer.toBinaryString(i)) != longestDupSubstring(Integer.toBinaryString(i))){
+        //         result = false;
+        //         break;
+        //     }
+        // }
+        // System.out.println(result);
 
     }
 
